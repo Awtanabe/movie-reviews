@@ -3,17 +3,23 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
-componentDidMount(){
-  fetch('/api/movies')
-    .then(response => response.json())
-    .then(json => console.log(json))
-    .catch(error => console.log(error))
-}
+  constructor(props){
+    super(props)
+    this.state = {
+      movies: []
+    }
+  }
+  componentDidMount(){
+    fetch('/api/movies')
+      .then(response => response.json())
+      .then(json => this.setState({movies: json}))
+      .catch(error => console.log(error))
+  }
 
   render(){
     return (
       <div className="App">
-        Hello world
+        {this.state.movies.map(moviee => <h1> {moviee.title}</h1>)}
       </div>
     );
   }
